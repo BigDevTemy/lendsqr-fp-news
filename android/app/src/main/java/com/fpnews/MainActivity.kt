@@ -1,5 +1,7 @@
 package com.fpnews
 
+import android.os.Bundle;
+Import org.devio.rn.splashscreen.Splashscreen;
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
@@ -12,6 +14,11 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "FPNews"
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+          super.onCreate(savedInstanceState)
+          SplashScreen.show(this)  // Add this here
+      }
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]

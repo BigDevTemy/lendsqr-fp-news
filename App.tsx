@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React,{useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -28,18 +28,47 @@ import {
 import {NavigationContainer,NavigationContainerProps } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import WelcomeScreen from './src/screens/welcome'
+import onBoardingScreen from './src/screens/onboarding'
+import SignIn from './src/screens/Signin'
+import SignUp from './src/screens/Signup'
+import SplashScreen from 'react-native-splash-screen';
+
+export type RootStackParamList = {
+  Onboarding: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
+};
+
 function App(): React.JSX.Element {
   
-  const Stack = createNativeStackNavigator();
+ 
+  
+  const Stack = createNativeStackNavigator<RootStackParamList>();
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen
-          name="Welcome"
-          component={WelcomeScreen}
-          options={{title: 'Welcome'}}
+          name="Onboarding"
+          component={onBoardingScreen}
+          options={{title: 'Welcome',headerShown:false}}
         />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{title: 'Signin',headerShown:false}}
+        />
+         <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{title: 'Signup',headerShown:false}}
+      
+
+        />
+
        
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,11 +1,15 @@
 package com.fpnews
 
-import android.os.Bundle;
-Import org.devio.rn.splashscreen.Splashscreen;
+
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+
+import android.os.Bundle;
+import org.devio.rn.splashscreen.SplashScreen;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+
 
 class MainActivity : ReactActivity() {
 
@@ -15,10 +19,18 @@ class MainActivity : ReactActivity() {
    */
   override fun getMainComponentName(): String = "FPNews"
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-          super.onCreate(savedInstanceState)
-          SplashScreen.show(this)  // Add this here
-      }
+ 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        SplashScreen.show(this)  // Display splash screen
+        super.onCreate(savedInstanceState)
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+        super.onCreate(savedInstanceState);
+       
+    }
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]

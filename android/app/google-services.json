@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47439662517",
+    "project_id": "lendsqr-fp-news-5e14c",
+    "storage_bucket": "lendsqr-fp-news-5e14c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47439662517:android:3f957c0e5360cc143b1dfc",
+        "android_client_info": {
+          "package_name": "com.fpnews"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-NoYzvn7mpxC3jV7QfJGzwNYdXhqzY6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -31,12 +31,14 @@ import WelcomeScreen from './src/screens/welcome'
 import onBoardingScreen from './src/screens/onboarding'
 import SignIn from './src/screens/Signin'
 import SignUp from './src/screens/Signup'
+import Dashboard from './src/screens/Dashboard'
 import SplashScreen from 'react-native-splash-screen';
 
 export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  Dashboard: undefined;
 };
 
 function App(): React.JSX.Element {
@@ -67,6 +69,11 @@ function App(): React.JSX.Element {
           options={{title: 'Signup',headerShown:false}}
       
 
+        />
+         <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{title: 'Dashboard',headerShown:false}}
         />
 
        

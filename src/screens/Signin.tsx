@@ -5,35 +5,63 @@ import { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useSelector,useDispatch } from 'react-redux';
+import { GoogleSignin,SignInSuccessResponse ,SignInResponse} from '@react-native-google-signin/google-signin';
+import { RootState } from '../app/types';
+import { setUserData } from '../app/userdata';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
-// GoogleSignin.configure({
-//     webClientId: 'YOUR_WEB_CLIENT_ID', // From Firebase Console
-// });
+GoogleSignin.configure({
+    scopes: ['email'], // Request user's email
+  });
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 const Index:React.FC<SignInScreenProps> = ({navigation})=>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {userdata}  = useSelector((state:RootState)=>state.userdata)
+   console.log('userDtata',userdata)
+    const dispatch = useDispatch()
+    const signInWithGoogle = async (): Promise<void> => {
+        try {
+          // Ensure Google Play Services are available
+          await GoogleSignin.hasPlayServices();
+    
+          // Start the Google sign-in process
+          const userInfo: SignInResponse = await GoogleSignin.signIn();
+    
+          // Check if the sign-in was successful
+          if (userInfo && userInfo.type === 'success') {
+            const successResponse = userInfo as SignInSuccessResponse;
+    
+            // Ensure that successResponse contains idToken before proceeding
+            
 
-    // const signInWithGoogle = async () => {
-    //     try {
-    //         // Start the sign-in process
-    //         await GoogleSignin.hasPlayServices();
-    //         const { idToken } = await GoogleSignin.signIn();
+            if (!successResponse) {
+              throw new Error("Failed to get ID token from Google sign-in.");
+            }
 
-    //         // Create a Google credential with the token
-    //         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    //         // Sign-in the user with the credential
-    //         await auth().signInWithCredential(googleCredential);
-    //         console.log('loggedIN')
-    //         //Alert.alert('User signed in!');
-    //     } catch (error) {
-    //         console.error(error);
-    //         //Alert.alert('Error signing in', error.message);
-    //     }
-    // };
+            if(successResponse){
+                dispatch(setUserData(successResponse?.data?.user))
+            }
+            console.log(successResponse?.data?.user)
+    
+            // Create Google credential with the user's ID token
+            //const googleCredential = auth.GoogleAuthProvider.credential(successResponse.idToken);
+    
+            // Sign in the user with the Google credential
+            //await auth().signInWithCredential(googleCredential);
+    
+            console.log('User signed in with Google');
+          } else if (userInfo.type === 'cancelled') {
+            console.log('User cancelled the sign-in process');
+          } else {
+            console.log('Sign-in failed with response:', userInfo);
+          }
+        } catch (error) {
+          console.error('Google Sign-In error:', error);
+        }
+      };
+    
     return (
         <View style={styles.container}>
             
@@ -70,9 +98,9 @@ const Index:React.FC<SignInScreenProps> = ({navigation})=>{
                     <View><Text style={{fontSize:18}}>or</Text></View>
                 <View style={styles.line}></View>
             </View>
-            <Pressable  style={[styles.googleButton,styles.borderPrimary]}>
-                <FontAwesome5 name="rocket" size={30} color="#900" />
-                <Text style={{fontSize:16}}>Continue with Google</Text>
+            <Pressable onPress={()=>signInWithGoogle()}  style={[styles.googleButton,styles.borderPrimary]}>
+                <FontAwesome5 name="google" size={30} color="#4285F4" />
+                <Text style={{fontSize:16,marginLeft:10}}>Continue with Google</Text>
             </Pressable>
             <Pressable  onPress={()=>navigation.navigate('SignUp')} style={{width:'100%',display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10}}>
                 <Text style={{fontWeight:'bold',fontSize:16}}>Do not have an account?</Text>

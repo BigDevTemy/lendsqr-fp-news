@@ -8,7 +8,8 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 
 class MainActivity : ReactActivity() {
@@ -23,15 +24,15 @@ class MainActivity : ReactActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         SplashScreen.show(this)  // Display splash screen
         super.onCreate(savedInstanceState)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+          .requestEmail() // Requests the user's email
+          .build()
+
+      // Initialize Google Sign-In client
+      val googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
-        super.onCreate(savedInstanceState);
-       
-    }
-
+   
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
    * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]

@@ -9,6 +9,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { GoogleSignin,SignInSuccessResponse ,SignInResponse} from '@react-native-google-signin/google-signin';
 import { RootState } from '../app/types';
 import { setUserData } from '../app/userdata';
+import { Alert } from 'react-native';
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
 GoogleSignin.configure({
@@ -42,6 +43,8 @@ const Index:React.FC<SignInScreenProps> = ({navigation})=>{
 
             if(successResponse){
                 dispatch(setUserData(successResponse?.data?.user))
+                Alert.alert(`Welcome ${successResponse?.data?.user.givenName}`)
+                navigation.navigate('Dashboard')
             }
             console.log(successResponse?.data?.user)
     

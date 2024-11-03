@@ -4,6 +4,7 @@ import { persistReducer,persistStore,REGISTER,PURGE,PAUSE,REHYDRATE,PERSIST } fr
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import userdata from './userdata'
+import news from './news'
 
 const persistConfig = {
   key: 'rootx',
@@ -13,6 +14,7 @@ const persistConfig = {
 
 const allReducer = combineReducers({
     userdata:userdata,
+    news:news
     
 })
 

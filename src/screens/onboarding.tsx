@@ -5,8 +5,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import SwiperFlatList from "react-native-swiper-flatlist"
 
 import { RootStackParamList } from "../../App";
+import { RootState } from "../app/types";
+import { useSelector } from "react-redux";
 const width = Dimensions.get("window").width
 const height = Dimensions.get("window").height
+
 
 
 type OnboardingScreenProps = NativeStackScreenProps<RootStackParamList, 'Onboarding'>;
@@ -20,6 +23,17 @@ type OnboardingScreenProps = NativeStackScreenProps<RootStackParamList, 'Onboard
         text: string;
         targetWord: string;
         color: string;
+    }
+    const {userdata}  = useSelector((state:RootState)=>state.userdata)
+
+    const handleNavigation = ()=>{
+        if(userdata){
+            navigation.navigate('Dashboard')
+        }
+        else{
+            navigation.navigate('SignIn')
+        }
+        
     }
     
 
@@ -60,8 +74,8 @@ type OnboardingScreenProps = NativeStackScreenProps<RootStackParamList, 'Onboard
             </View>
 
             <View style={styles.skipContainer}>
-                <Pressable onPress={()=>navigation.navigate('SignIn')} style={[styles.btn,styles.secondaryBg]}><Text style={styles.textWhite}>Skip</Text></Pressable>
-                <Pressable style={[styles.btn,styles.bgWhite,styles.borderPrimary]}><Text style={[styles.textPrimary]}>Continue</Text></Pressable>
+                <Pressable onPress={()=>handleNavigation()} style={[styles.btn,styles.secondaryBg]}><Text style={styles.textWhite}>Skip</Text></Pressable>
+                <Pressable onPress={()=>handleNavigation()} style={[styles.btn,styles.bgWhite,styles.borderPrimary]}><Text style={[styles.textPrimary]}>Continue</Text></Pressable>
 
             </View>
 
